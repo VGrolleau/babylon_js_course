@@ -15,8 +15,8 @@ function createCamera(scene) {
     camera.attachControl(canvas);
 
     // Limiter les mouvements de la caméra
-    camera.lowerRadiusLimit = 6;
-    camera.upperRadiusLimit = 30;
+    camera.lowerRadiusLimit = 20;
+    camera.upperRadiusLimit = 160;
 }
 
 // Fonction pour créer une lumière
@@ -35,7 +35,7 @@ function createSun(scene) {
 
     const sun = BABYLON.MeshBuilder.CreateSphere('sun', {
         segments: 16,
-        diameter: 4
+        diameter: 12
     }, scene);
     sun.material = sunMaterial;
 
@@ -58,15 +58,44 @@ function createPlanet(scene) {
     planetMaterial3.diffuseTexture = new BABYLON.Texture('assets/images/dark_rock.png', scene);
     planetMaterial3.specularColor = BABYLON.Color3.Black();
 
-    const planetMaterials = [planetMaterial, planetMaterial2, planetMaterial3];
+    const planetMaterial4 = new BABYLON.StandardMaterial('planetMaterial4', scene);
+    planetMaterial4.diffuseTexture = new BABYLON.Texture('assets/images/ice.jpg', scene);
+    planetMaterial4.specularColor = BABYLON.Color3.Black();
 
-    const speeds = [0.01, 0.0075, 0.005];
-    for (let i = 0; i < 3; i++) {
+    const planetMaterial5 = new BABYLON.StandardMaterial('planetMaterial5', scene);
+    planetMaterial5.diffuseTexture = new BABYLON.Texture('assets/images/water.jpg', scene);
+    planetMaterial5.specularColor = BABYLON.Color3.Black();
+
+    const planetMaterial6 = new BABYLON.StandardMaterial('planetMaterial6', scene);
+    planetMaterial6.diffuseTexture = new BABYLON.Texture('assets/images/gaz.jpg', scene);
+    planetMaterial6.specularColor = BABYLON.Color3.Black();
+
+    const planetMaterial7 = new BABYLON.StandardMaterial('planetMaterial7', scene);
+    planetMaterial7.diffuseTexture = new BABYLON.Texture('assets/images/lava.jpg', scene);
+    planetMaterial7.specularColor = BABYLON.Color3.Black();
+
+    const planetMaterial8 = new BABYLON.StandardMaterial('planetMaterial8', scene);
+    planetMaterial8.diffuseTexture = new BABYLON.Texture('assets/images/wood.jpg', scene);
+    planetMaterial8.specularColor = BABYLON.Color3.Black();
+
+    const planetMaterials = [
+        planetMaterial,
+        planetMaterial2,
+        planetMaterial3,
+        planetMaterial4,
+        planetMaterial5,
+        planetMaterial6,
+        planetMaterial7,
+        planetMaterial8
+    ];
+
+    const speeds = [0.01, 0.009, 0.008, 0.007, 0.006, 0.005, 0.004, 0.003];
+    for (let i = 0; i < 8; i++) {
         const planet = BABYLON.MeshBuilder.CreateSphere(`planet${i}`, {
             segments: 16,
-            diameter: 1
+            diameter: 4
         }, scene);
-        planet.position.x = (2 * i) + 4;
+        planet.position.x = (8 * i) + 16;
         planet.material = planetMaterials[i];
 
         planet.orbit = {
@@ -107,7 +136,7 @@ function createSkybox(scene) {
 function createShip(scene) {
     BABYLON.SceneLoader.ImportMesh('', 'assets/models/', 'spaceCraft1.obj', scene, (meshes) => {
         meshes.forEach((mesh) => {
-            mesh.position = new BABYLON.Vector3(0, -5, 10);
+            mesh.position = new BABYLON.Vector3(0, -5, 15);
             mesh.scaling = new BABYLON.Vector3(.1, .1, .1);
         });
     });
